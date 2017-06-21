@@ -1,0 +1,14 @@
+name: flocation
+description: A new flutter plugin project.
+version: 0.0.1
+author:
+homepage:
+
+flutter:
+  plugin:
+    androidPackage: com.yourcompany.flocation
+    pluginClass: FlocationPlugin
+
+dependencies:
+  flutter:
+    sdk: flutter

@@ -1,0 +1,22 @@
+PODS:
+  - flocation (0.0.1):
+    - Flutter
+  - Flutter (1.0.0)
+
+DEPENDENCIES:
+  - flocation (from `/Users/mclark4386/Projects/MMFlutter/flocation/ios`)
+  - Flutter (from `/Users/mclark4386/bin/flutter/bin/cache/artifacts/engine/ios`)
+
+EXTERNAL SOURCES:
+  flocation:
+    :path: /Users/mclark4386/Projects/MMFlutter/flocation/ios
+  Flutter:
+    :path: /Users/mclark4386/bin/flutter/bin/cache/artifacts/engine/ios
+
+SPEC CHECKSUMS:
+  flocation: b76361ea410c05de6c914eca41a31da8d1237b63
+  Flutter: d674e78c937094a75ac71dd77e921e840bea3dbf
+
+PODFILE CHECKSUM: cc70c01bca487bebd110b87397f017f3b76a89f1
+
+COCOAPODS: 1.2.1
