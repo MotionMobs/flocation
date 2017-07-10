@@ -10,7 +10,7 @@ class FlocationPlugin(): MethodCallHandler {
   companion object {
     @JvmStatic
     fun registerWith(registrar: Registrar): Unit {
-      val channel = MethodChannel(registrar.messenger(), "flocation")
+      val channel = MethodChannel(registrar.messenger(), "motionmobs.com/flocation")
       channel.setMethodCallHandler(FlocationPlugin())
     }
   }
@@ -18,6 +18,8 @@ class FlocationPlugin(): MethodCallHandler {
   override fun onMethodCall(call: MethodCall, result: Result): Unit {
     if (call.method.equals("getPlatformVersion")) {
       result.success("Android ${android.os.Build.VERSION.RELEASE}")
+      }else if (call.method.equals("getLocation")){
+      result.success([23.1, 645.234])
     } else {
       result.notImplemented()
     }
