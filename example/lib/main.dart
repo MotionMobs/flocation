@@ -16,12 +16,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<double> _locationValues = [];
+  String _locationValues = '';
   List<StreamSubscription<dynamic>> _streamSubscriptions = <StreamSubscription<dynamic>>[];
 
   @override
   Widget build(BuildContext context) {
-    final List<String> location = _locationValues?.map((double v) => v.toStringAsFixed(3))?.toList();
+    final String location = _locationValues;
     return new MaterialApp(
       home: new Scaffold(
         appBar: new AppBar(
@@ -48,7 +48,7 @@ class _MyAppState extends State<MyApp> {
   initState(){
     super.initState();
     _streamSubscriptions.add(Flocation.locationEvents.listen((LocationEvent event) {
-        setState((){ _locationValues = <double>[event.latitude, event.longitude, event.elevation];});
+        setState((){ _locationValues = event.toString();});
       }));
   }
 }
