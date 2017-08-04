@@ -1,11 +1,24 @@
 # flocation
 
-Location Plugin...
+A Flutter plugin to access the gps location events.
 
-Don't forget to add the ACCESS_FINE_LOCATION permission to your android AndroidManifest.xml
-```<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>```
 
-## Getting Started
+## Usage
+
+To use this plugin, add `flocation` as a [dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/).
+
+
+### Example
+
+``` dart
+import 'package:flocation/flocation.dart';
+
+Flocation.locationEvents.listen((LocationEvent event) {
+ // Do something with the event.
+});
+```
+
+## General Flutter Help
 
 For help getting started with Flutter, view our online
 [documentation](http://flutter.io/).

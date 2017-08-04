@@ -17,38 +17,42 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _locationValues = '';
-  List<StreamSubscription<dynamic>> _streamSubscriptions = <StreamSubscription<dynamic>>[];
+  StreamSubscription<dynamic> _streamSubscription = null;
 
   @override
   Widget build(BuildContext context) {
     final String location = _locationValues;
     return new MaterialApp(
-      home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text('Plugin example app'),
-        ),
-        body: new Center( child: new Column(
-	  children: [new Center(
-            child: new Text('Running on: $location\n'),
-                          ),],
-                                            )
+        home: new Scaffold(
+      appBar: new AppBar(
+        title: new Text('Plugin example app'),
       ),
-                         ));
+      body: new Center(
+          child: new Column(
+        children: [
+          new Center(
+            child: new Text('Running on: $location\n'),
+          ),
+        ],
+      )),
+    ));
   }
 
   @override
-  dispose(){
+  dispose() {
     super.dispose();
-    for(StreamSubscription<dynamic> sub in _streamSubscriptions){
-      sub.cancel();
+    if (_streamSubscription != null) {
+      _streamSubscription.cancel();
     }
   }
 
   @override
-  initState(){
+  initState() {
     super.initState();
-    _streamSubscriptions.add(Flocation.locationEvents.listen((LocationEvent event) {
-        setState((){ _locationValues = event.toString();});
-      }));
+    _streamSubscription = Flocation.locationEvents.listen((LocationEvent event) {
+      setState(() {
+        _locationValues = event.toString();
+      });
+    });
   }
 }
