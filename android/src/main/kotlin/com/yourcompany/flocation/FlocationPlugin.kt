@@ -1,56 +1,62 @@
 package com.yourcompany.flocation
 
-import android.os.AsyncTask
-import java.lang.Thread
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.EventChannel.StreamHandler
 import io.flutter.plugin.common.EventChannel.EventSink
 import io.flutter.plugin.common.PluginRegistry.Registrar
 
-class FlocationPlugin() : StreamHandler {
+import android.app.Activity
+import android.os.Bundle
+import android.os.AsyncTask
+import java.lang.Thread
+import android.content.Context
+import android.location.Location;
+import android.location.LocationManager;
+import android.location.LocationListener
+
+class FlocationPlugin(val activity: Activity) : StreamHandler, LocationListener {
     companion object {
         @JvmStatic
         fun registerWith(registrar: Registrar): Unit {
             val LocationID = "motionmobs.com/flocation"
             val channel = EventChannel(registrar.messenger(), LocationID)
-            channel.setStreamHandler(FlocationPlugin())
+            channel.setStreamHandler(FlocationPlugin(registrar.activity()))
         }
     }
 
-    override fun onListen(arguments: Any?, eventSink: EventSink?) {
-        //TODO: stream location events!
+    //Flutter Layer Communication
+    var events: EventSink? = null
+    var locationManager: LocationManager? = null
 
-        TestEvents().execute(eventSink);
+    override fun onListen(arguments: Any?, eventSink: EventSink?) {
+        events = eventSink
+        if (locationManager == null) {
+            locationManager = activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        }
+        locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,  0.0f, this)
     }
 
     override fun onCancel(arguments: Any?) {
-        //TODO: clean up!
+        locationManager?.removeUpdates(this)
     }
 
-    inner class TestEvents : AsyncTask<EventSink?, Boolean, Boolean>() {
+    //Listen for location changes and send them to eventSink
 
-        override fun onPreExecute() {
-            super.onPreExecute()
+    override fun onLocationChanged(location: Location?){
+        if (events != null && location != null){
+            events?.success(listOf(location?.getLatitude(),location?.getLongitude(), location?.getAltitude(), location?.getAccuracy()))
         }
+    }
 
-        override fun doInBackground(vararg events: EventSink?): Boolean {
-            for (eventSink in events) {
-                if (eventSink != null) {
-                    for (i in 0..99) {
-                        val lat = i.toDouble();
-                        val long = i.toDouble();
-                        val elev = i.toDouble();
-                        eventSink?.success(listOf(lat, long, elev))
-                        Thread.sleep(1_000)
-                    }
-                    return true
-                }
-            }
-            return false
-        }
+    override fun onStatusChanged(provider: String, status:Int, extras: Bundle?){
 
-        override fun onPostExecute(result: Boolean) {
-            super.onPostExecute(result)
-        }
+    }
+
+    override fun onProviderEnabled(provider: String){
+
+    }
+
+    override fun onProviderDisabled(provider: String){
+
     }
 }

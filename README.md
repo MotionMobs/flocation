@@ -1,6 +1,9 @@
 # flocation
 
-A new flutter plugin project.
+Location Plugin...
+
+Don't forget to add the ACCESS_FINE_LOCATION permission to your android AndroidManifest.xml
+```<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>```
 
 ## Getting Started
 

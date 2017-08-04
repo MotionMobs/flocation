@@ -11,7 +11,8 @@ public class LocationStreamHandler: NSObject, FlutterStreamHandler{
                 let lat = Double(i);
                 let long = Double(i);
                 let elev = Double(i);
-                events([lat,long,elev]);
+                let acc = Double(i);
+                events([lat,long,elev,acc]);
                 sleep(1);
             }
         }
