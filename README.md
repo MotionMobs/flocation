@@ -18,6 +18,8 @@ Flocation.locationEvents.listen((LocationEvent event) {
 });
 ```
 
+(Currently only Android has the native side filled in.)
+
 ## General Flutter Help
 
 For help getting started with Flutter, view our online
